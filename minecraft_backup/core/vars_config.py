@@ -1,7 +1,13 @@
 # -*- coding: utf-8 *-*
 
+"""
+    This file is part of Minecraft Backup
+"""
+
+
 # Imports os
 from os import path
+
 
 #############################################################################
 # PATHS

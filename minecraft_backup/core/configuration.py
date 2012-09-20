@@ -1,21 +1,26 @@
+#*-* coding: utf-8 *-*
+# This file is part of Minecraft Backup
 
 # Minecraft Backup Imports
-from vars_config import config_folder
-from vars_config import template_config_json
-from vars_config import save_backup_folder
+from minecraft_backup.resources import D_TEMPLATE_CONFIG_JSON
+from minecraft_backup.resources import CONFIG_FOLDER
 
-# Imports platform
+# Others imports
 from platform import system
-# Imports os
+
+# Import os
 from os import path
 from os import mkdir
 from os import chdir
-# Imports json
+
+# Import json
 from json import dumps
 from json import loads
 
 
-def get_OS():
+def get_os():
+    """function for get OS"""
+
     os_info = system()
 
     if os_info == 'Linux':
@@ -26,30 +31,53 @@ def get_OS():
         return 'MacOS'
 
 
-def save_config():
-    config_file = open('config.json', 'w')
-    config_file.write(dumps(template_config_json, indent=4))
-    config_file.close()
+def load_config(option):
+    """Load configuration"""
+
+    load_file = open('config.json').read()
+    read_file = loads(load_file)
+
+    for op in read_file.items():
+        if op[0] == option:
+            return op[1]
+        else:
+            continue
 
 
-def load_config(os):
-    if path.exists('config.json') is True:
-        config_file = open('config.json', 'r')
-        read_config_file = loads(config_file.read())
-        config_file.close()
+def d_save_config():
+    """Save default configurations in .json file"""
 
-        save_backup_folder = read_config_file['save_backup_folder']
-    else:
-        save_config()
+    save_config_file = open('config.json', 'w')
+    save_config_file.write(dumps(D_TEMPLATE_CONFIG_JSON, indent=4))
+    save_config_file.close()
+
+
+def save_new_config(save_backup_folder):
+    """Saves new configurations in .json file"""
+    save_config_file = open('config.json', 'w')
+
+    save_template = dumps({
+                          'save_backup_folder': save_backup_folder
+                          }, indent=4)
+
+    save_config_file.write(save_template)
+    save_config_file.close()
+
+
+def check_config_file(os):
+    """Check exists configuration file"""
+
+    if path.exists('config.json') is False:
+        d_save_config()
 
 
 def config(os):
-    if path.exists(config_folder[os]) is True:
-        chdir(config_folder[os])
-        load_config(os)
-    else:
-        mkdir(config_folder[os], 0777)
-        chdir(config_folder[os])
-        load_config(os)
+    """Checking if exists config folder and app directory"""
 
-config(get_OS())
+    if path.exists(CONFIG_FOLDER[os]) is True:
+        chdir(CONFIG_FOLDER[os])
+        check_config_file(os)
+    else:
+        mkdir(CONFIG_FOLDER[os], 0777)
+        chdir(CONFIG_FOLDER[os])
+        check_config_file(os)

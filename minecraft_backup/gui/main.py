@@ -7,8 +7,9 @@ import sys
 # Minecraft Backup imports
 from minecraft_backup.resources import IMAGES
 from minecraft_backup.core import configuration
-from minecraft_backup.gui import config_window
 from minecraft_backup.gui.center_widget import center_widget
+from minecraft_backup.gui.dialogs import config_window
+from minecraft_backup.gui.dialogs import new_backup_window
 
 # PyQt4.QtGui
 from PyQt4.QtGui import QApplication
@@ -37,26 +38,30 @@ class main_window(QMainWindow):
 
         self.header()
 
-        # BTN_CONFIG
+        # btn_config
         self.btn_config = QPushButton(self)
         self.btn_config.setGeometry(QRect(7, 7, 30, 30))
         self.btn_config.setToolTip('Configuration')
 
-        # MENU BAR
+        # menu bar
         self.menu_bar = self.menuBar()
 
         self.menu_help = self.menu_bar.addMenu('About')
         self.menu_help.addAction('About Minecraft Backup')
         self.menu_help.addAction('About Qt')
 
-        # LIST_BACKUP
+        # list_backup
         self.list_backup = QListWidget(self)
         self.list_backup.setGeometry(QRect(20, 170, 450, 310))
 
-        self.list_backup.addItem('Hola mundo')
+        # btn_new_backup
+        self.btn_new_backup = QPushButton('New backup', self)
+        self.btn_new_backup.setGeometry(QRect(485, 170, 200, 30))
 
         # CONNECT SIGNALS
         self.connect(self.btn_config, SIGNAL('clicked()'), self.open_config)
+        self.connect(self.btn_new_backup, SIGNAL('clicked()'),
+                     self.open_new_backup)
 
     def header(self):
         header_label = QLabel(self)
@@ -64,8 +69,12 @@ class main_window(QMainWindow):
         header_label.setPixmap(QPixmap(IMAGES['header']))
 
     def open_config(self):
-        configuration_window = config_window.config_window(self)
-        configuration_window.show()
+        self.configuration_window = config_window.config_window(self)
+        self.configuration_window.show()
+
+    def open_new_backup(self):
+        self.new_backup_window = new_backup_window.new_backup_window(self)
+        self.new_backup_window.show()
 
 
 def start():

@@ -1,19 +1,19 @@
 #*-* coding: utf-8 *-*
 # This file is part of Minecraft Backup
 
-# Minecraft Backup Imports
+# Minecraft Backup
 from minecraft_backup.resources import D_TEMPLATE_CONFIG_JSON
 from minecraft_backup.resources import CONFIG_FOLDER
 
-# Others imports
+# platform
 from platform import system
 
-# Import os
+# os
 from os import path
 from os import mkdir
 from os import chdir
 
-# Import json
+# json
 from json import dumps
 from json import loads
 

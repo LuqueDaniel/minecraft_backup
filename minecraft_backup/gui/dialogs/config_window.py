@@ -1,12 +1,12 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft Backup
 
-# Minecraft Backu Imports
+# Minecraft Backu
 from minecraft_backup.core.configuration import load_config
 from minecraft_backup.core.configuration import save_new_config
 from minecraft_backup.gui.center_widget import center_widget
 
-# PyQt4.QtGui Imports
+# PyQt4.QtGui
 from PyQt4.QtGui import QDialog
 from PyQt4.QtGui import QLabel
 from PyQt4.QtGui import QLineEdit
@@ -70,7 +70,7 @@ class config_window(QDialog):
             self.input_save_folder.setText(self.file_dialog)
 
     def save_configurations(self):
-        self.backup_folder = str(self.input_save_folder.text())
+        self.backup_folder = str(self.input_save_folder.text().toUtf8())
 
         save_new_config(self.backup_folder)
         self.close()

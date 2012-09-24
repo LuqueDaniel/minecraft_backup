@@ -1,10 +1,10 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft backup
 
-# Others imports
+# sys
 import sys
 
-# Minecraft Backup imports
+# Minecraft Backup
 from minecraft_backup.resources import IMAGES
 from minecraft_backup.core import configuration
 from minecraft_backup.gui.center_widget import center_widget

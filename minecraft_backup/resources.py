@@ -2,7 +2,7 @@
 # This file is part of Minecraft Backup
 
 
-# Others imports
+# os
 from os import path
 
 

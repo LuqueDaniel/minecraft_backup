@@ -1,6 +1,7 @@
 # -*- coding: utf-8 *-*
 # This fail is part of Minecraft Backup
 
+# PyQt4.QtGui
 from PyQt4.QtGui import QDesktopWidget
 
 

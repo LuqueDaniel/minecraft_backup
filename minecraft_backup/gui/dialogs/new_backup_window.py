@@ -1,20 +1,24 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft Backup
 
-# Minecraft Backup imports
+# Minecraft Backup
 from minecraft_backup.core.configuration import load_config
 from minecraft_backup.gui.center_widget import center_widget
+from minecraft_backup.core.make_backup import make_backup
 
-# PyQt4.QtGui imports
+# PyQt4.QtGui
 from PyQt4.QtGui import QDialog
 from PyQt4.QtGui import QLabel
 from PyQt4.QtGui import QLineEdit
 from PyQt4.QtGui import QPushButton
 from PyQt4.QtGui import QFileDialog
 
-# PyQt4.QtCore imports
+# PyQt4.QtCore
 from PyQt4.QtCore import QRect
 from PyQt4.QtCore import SIGNAL
+
+# os
+from os import path
 
 
 class new_backup_window(QDialog):
@@ -54,6 +58,8 @@ class new_backup_window(QDialog):
         self.connect(self.btn_change_save_backup, SIGNAL('clicked()'),
                      self.change_save_backup)
         self.connect(self.btn_cancel, SIGNAL('clicked()'), self.close)
+        self.connect(self.btn_create_backup, SIGNAL('clicked()'),
+                     self.create_backup)
 
     def generate_label(self, text, h, v):
         self.label = QLabel(self)
@@ -68,3 +74,10 @@ class new_backup_window(QDialog):
 
         if self.file_dialog != '':
             self.btn_change_save_backup.setText(self.file_dialog)
+
+    def create_backup(self):
+        self.dst = path.join(str(self.btn_change_save_backup.text().toUtf8()),
+                             str(self.input_backup_name.text().toUtf8()))
+        make_backup(self.dst)
+
+        self.close()

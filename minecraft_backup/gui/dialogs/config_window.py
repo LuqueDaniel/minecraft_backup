@@ -1,7 +1,7 @@
 # -*- coding: utf-8 *-*
-# This file is part of Minecraft Backup
+# This file is part of Minecraft Backup Manager
 
-# Minecraft Backu
+# Minecraft Backu Manager
 from minecraft_backup.core.configuration import load_config
 from minecraft_backup.core.configuration import save_new_config
 from minecraft_backup.gui.center_widget import center_widget
@@ -26,7 +26,7 @@ class config_window(QDialog):
         self.setGeometry(0, 0, 500, 400)
         self.setMaximumSize(500, 400)
         self.setMinimumSize(500, 400)
-        self.setWindowTitle('Minecraft Backup - Configuration')
+        self.setWindowTitle('Minecraft Backup Manager - Configuration')
         center_widget(self)
 
         # STANNDARD BUTTONS

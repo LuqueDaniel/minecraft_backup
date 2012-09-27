@@ -1,13 +1,14 @@
 # -*- coding: utf-8 *-*
-# This file is part of Minecraft backup
+# This file is part of Minecraft backup Manager
 
 # sys
 import sys
 
-# Minecraft Backup
+# Minecraft Backup Manager
 from minecraft_backup.resources import IMAGES
 from minecraft_backup.core import configuration
 from minecraft_backup.gui.center_widget import center_widget
+from minecraft_backup.gui.msg_box import msg_about_qt
 from minecraft_backup.gui.dialogs import config_window
 from minecraft_backup.gui.dialogs import new_backup_window
 
@@ -30,7 +31,7 @@ class main_window(QMainWindow):
     def __init__(self):
         super(main_window, self).__init__()
 
-        self.setWindowTitle('Minecraft Backup')
+        self.setWindowTitle('Minecraft Backup Manager')
         self.setGeometry(0, 0, 700, 500)
         self.setMinimumSize(700, 500)
         self.setMaximumSize(700, 500)
@@ -47,8 +48,8 @@ class main_window(QMainWindow):
         self.menu_bar = self.menuBar()
 
         self.menu_help = self.menu_bar.addMenu('About')
-        self.menu_help.addAction('About Minecraft Backup')
-        self.menu_help.addAction('About Qt')
+        self.menu_help.addAction('About Minecraft Backup Manager')
+        self.menu_help.addAction('About Qt', lambda: msg_about_qt(self))
 
         # list_backup
         self.list_backup = QListWidget(self)
@@ -80,9 +81,9 @@ class main_window(QMainWindow):
 def start():
     app = QApplication(sys.argv)
 
-    QCoreApplication.setApplicationName('Minecraft Backup')
+    QCoreApplication.setApplicationName('Minecraft Backup Manager')
 
-    # Create or load configuration
+    # Create configuration
     configuration.config(configuration.get_os())
 
     minebackup = main_window()

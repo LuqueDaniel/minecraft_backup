@@ -1,7 +1,7 @@
 # -*- coding: utf-8 *-*
-# This file is part of Minecraft Backup
+# This file is part of Minecraft Backup Manager
 
-# Minecraft Backup
+# Minecraft Backup Manager
 from minecraft_backup.resources import GAME_PATH
 from minecraft_backup.core.configuration import get_os
 
@@ -28,6 +28,7 @@ class make_backup_thread(QThread):
     def run(self, dst):
         if path.exists(dst):
             self.emit(SIGNAL('direxists()'))
+            self.exit()
         else:
             self.make_backup(dst)
 

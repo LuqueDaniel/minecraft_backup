@@ -1,10 +1,13 @@
 # -*- coding: utf-8 *-*
-# This file is part of Minecraft Backup
+# This file is part of Minecraft Backup Manager
 
-# Minecraft Backup
+# Minecraft Backup Manager
 from minecraft_backup.core.configuration import load_config
-from minecraft_backup.gui.center_widget import center_widget
 from minecraft_backup.core.make_backup import make_backup_thread
+from minecraft_backup.gui.center_widget import center_widget
+from minecraft_backup.gui.msg_box import msg_no_backup_name
+from minecraft_backup.gui.msg_box import msg_dir_exists
+from minecraft_backup.gui.msg_box import msg_make_backup_finishied
 
 # PyQt4.QtGui
 from PyQt4.QtGui import QDialog
@@ -13,12 +16,10 @@ from PyQt4.QtGui import QLineEdit
 from PyQt4.QtGui import QPushButton
 from PyQt4.QtGui import QFileDialog
 from PyQt4.QtGui import QProgressBar
-from PyQt4.QtGui import QMessageBox
 
 # PyQt4.QtCore
 from PyQt4.QtCore import QRect
 from PyQt4.QtCore import SIGNAL
-from PyQt4.QtCore import QString
 
 # os
 from os import path
@@ -78,19 +79,6 @@ class new_backup_window(QDialog):
         self.label.adjustSize()
         self.label.move(h, v)
 
-    def no_backup_name(self):
-        self.msg_no_backup_name = QMessageBox.information(self, 'Backup name',
-                                 'Enter a name for the backup')
-        self.input_backup_name.setFocus()
-
-    def dir_exists(self):
-        self.exists_msg = 'there is already a folder named "%s"' % (
-                            self.input_backup_name.text())
-
-        self.msg_dir_exists = QMessageBox.warning(self,
-                                                  'folder already exists',
-                                                  self.exists_msg)
-
     def change_save_backup(self):
         self.file_dialog = QFileDialog.getExistingDirectory(self,
                            'Select folder saved for backup',
@@ -101,7 +89,7 @@ class new_backup_window(QDialog):
 
     def create_backup(self):
         if self.input_backup_name.text() == '':
-            self.no_backup_name()
+            msg_no_backup_name(self)
 
         else:
             self.dst = path.join(str(self.btn_change_save_backup.text()),
@@ -111,7 +99,8 @@ class new_backup_window(QDialog):
 
             # CONNECT SIGNALS
             self.connect(self.make_backup, SIGNAL('direxists()'),
-                         self.dir_exists)
-            self.connect(self.make_backup, SIGNAL('makeend()'), self.close)
+                         lambda: msg_dir_exists(self))
+            self.connect(self.make_backup, SIGNAL('makeend()'),
+                         lambda: msg_make_backup_finishied(self))
 
             self.make_backup.run(self.dst)

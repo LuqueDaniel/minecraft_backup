@@ -1,7 +1,7 @@
 #*-* coding: utf-8 *-*
-# This file is part of Minecraft Backup
+# This file is part of Minecraft Backup Manager
 
-# Minecraft Backup
+# Minecraft Backup Manager
 from minecraft_backup.resources import D_TEMPLATE_CONFIG_JSON
 from minecraft_backup.resources import CONFIG_FOLDER
 

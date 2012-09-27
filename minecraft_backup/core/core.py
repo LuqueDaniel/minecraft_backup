@@ -1,6 +1,6 @@
 # -*- coding: utf-8 *-*
 
-#This file is part of Minecraft Backup
+#This file is part of Minecraft Backup Manager
 
 from minecraft_backup.gui import main
 

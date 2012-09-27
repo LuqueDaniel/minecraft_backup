@@ -1,5 +1,5 @@
 # -*- coding: utf-8 *-*
-# This fail is part of Minecraft Backup
+# This fail is part of Minecraft Backup Manager
 
 # PyQt4.QtGui
 from PyQt4.QtGui import QDesktopWidget

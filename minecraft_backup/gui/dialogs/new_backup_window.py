@@ -3,7 +3,7 @@
 
 # Minecraft Backup Manager
 from minecraft_backup.core.configuration import load_config
-from minecraft_backup.core.make_backup import make_backup_thread
+from minecraft_backup.core.backup_manager import make_backup_thread
 from minecraft_backup.gui.center_widget import center_widget
 from minecraft_backup.gui.msg_box import msg_no_backup_name
 from minecraft_backup.gui.msg_box import msg_dir_exists
@@ -103,4 +103,5 @@ class new_backup_window(QDialog):
             self.connect(self.make_backup, SIGNAL('makeend()'),
                          lambda: msg_make_backup_finishied(self))
 
-            self.make_backup.run(self.dst)
+            self.make_backup.run(self.dst,
+                                 str(self.input_backup_name.text().toUtf8()))

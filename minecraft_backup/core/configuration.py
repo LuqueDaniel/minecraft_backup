@@ -1,6 +1,8 @@
 #*-* coding: utf-8 *-*
 # This file is part of Minecraft Backup Manager
 
+"""The module contain functions for configurations"""
+
 # Minecraft Backup Manager
 from minecraft_backup.resources import D_TEMPLATE_CONFIG_JSON
 from minecraft_backup.resources import CONFIG_FOLDER
@@ -34,8 +36,9 @@ def get_os():
 def load_config(option):
     """Load configuration"""
 
-    load_file = open('config.json').read()
-    read_file = loads(load_file)
+    load_file = open('config.json', 'r')
+    read_file = loads(load_file.read())
+    load_file.close()
 
     for op in read_file.items():
         if op[0] == option:

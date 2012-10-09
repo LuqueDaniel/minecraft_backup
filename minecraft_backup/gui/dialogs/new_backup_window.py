@@ -38,6 +38,7 @@ class new_backup_window(QDialog):
         # STANNDARD BUTTONS
         self.btn_cancel = QPushButton('Cancel', self)
         self.btn_cancel.setGeometry(QRect(135, 160, 80, 28))
+        self.btn_cancel.setAutoDefault(False)
 
         # btn_create_backup
         self.btn_create_backup = QPushButton('Create backup', self)
@@ -58,6 +59,7 @@ class new_backup_window(QDialog):
         self.btn_change_save_backup = QPushButton(
                                       load_config('save_backup_folder'), self)
         self.btn_change_save_backup.setGeometry(QRect(100, 64, 335, 30))
+        self.btn_change_save_backup.setAutoDefault(False)
 
         # progressbar
         self.progressbar = QProgressBar(self)

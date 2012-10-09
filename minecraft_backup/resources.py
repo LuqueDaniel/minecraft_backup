@@ -5,6 +5,9 @@
 # os
 from os import path
 
+# sys
+import sys
+
 
 #############################################################################
 # PATHS
@@ -12,18 +15,27 @@ from os import path
 
 
 GAME_PATH = {'Linux': path.join(path.expanduser('~'), '.minecraft'),
-             'Windows': path.join('%AppData%', '.minecraft'),
+             'Windows': path.join(path.expanduser('~'), 'AppData', 'Roaming',
+                        '.minecraft'),
              'MacOS': path.join(path.expanduser('~'), 'Library',
                       'Application Support', 'minecraft')}
 
 CONFIG_FOLDER = {'Linux': path.join(path.expanduser('~'), '.minebackup'),
-                 'Windows': path.join('%AppData%', '.minebackup'),
+                 'Windows': path.join(path.expanduser('~'), '.minebackup'),
                  'MacOS': path.join(path.expanduser('~'), 'Library',
                           'Application Support', 'minebackup')}
 
 SAVE_BACKUP_FOLDER = path.expanduser('~')
 
+
 PROJECT_PATH = path.abspath(path.dirname(__file__))
+
+
+#Only for py2exe
+frozen = getattr(sys, 'frozen', '')
+if frozen in ('dll', 'console_exe', 'windows_exe'):
+    # py2exe:
+    PROJECT_PATH = path.abspath(path.dirname(sys.executable))
 
 
 #############################################################################

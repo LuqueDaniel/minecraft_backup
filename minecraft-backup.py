@@ -1,6 +1,7 @@
 #-*- conding: utf-8 -*-
 # This file is part of Minecraft Backup Manager
 
+# Minecraft Backup Manager
 import minecraft_backup
 
 

@@ -37,6 +37,17 @@ def msg_remove_backup(self):
         return False
 
 
+def msg_restore_backup(self):
+    msg_backup_restore = QMessageBox.question(self, 'Restore backup',
+                                     'Restore backup?', QMessageBox.Yes,
+                                     QMessageBox.No)
+
+    if msg_backup_restore == QMessageBox.Yes:
+        return True
+    else:
+        return False
+
+
 def msg_backup_folder_not_exists(self, name_backup):
     exists_msg = 'folder of "%s" not exists' % name_backup
 

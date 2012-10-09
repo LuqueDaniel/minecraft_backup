@@ -46,7 +46,7 @@ class config_window(QDialog):
 
         # change_save_folder
         self.btn_save_folder = QPushButton('Change', self)
-        self.btn_save_folder.move(400, 15)
+        self.btn_save_folder.move(400, 16)
 
         # CONNECT SIGNALS
         self.connect(self.btn_save_folder, SIGNAL('clicked()'),

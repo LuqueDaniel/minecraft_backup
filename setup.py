@@ -43,7 +43,7 @@ params = {
 
     'packages': find_packages() + ['minecraft_backup/images'],
     'data_files': resources_files,
-    'console': ['minecraft-backup.py'],
+    'windows': ['minecraft-backup.py'],
     'options': {
         "py2exe": {'dll_excludes': ["MSVCP90.dll"],
                    'includes': ['sip']}

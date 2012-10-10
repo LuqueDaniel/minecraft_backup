@@ -59,6 +59,7 @@ def d_save_config():
 
 def save_new_config(save_backup_folder):
     """Saves new configurations in .json file"""
+
     save_config_file = open('config.json', 'w')
 
     save_template = dumps({

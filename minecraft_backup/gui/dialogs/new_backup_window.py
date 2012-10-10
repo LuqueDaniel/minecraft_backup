@@ -1,11 +1,13 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft Backup Manager
 
+
 # Minecraft Backup Manager
 from minecraft_backup.core.configuration import load_config
 from minecraft_backup.core.backup_manager import make_backup_thread
 from minecraft_backup.gui.center_widget import center_widget
 from minecraft_backup.gui.msg_box import msg_no_backup_name
+from minecraft_backup.gui.msg_box import msg_name_exists
 from minecraft_backup.gui.msg_box import msg_dir_exists
 from minecraft_backup.gui.msg_box import msg_make_backup_finishied
 
@@ -15,7 +17,6 @@ from PyQt4.QtGui import QLabel
 from PyQt4.QtGui import QLineEdit
 from PyQt4.QtGui import QPushButton
 from PyQt4.QtGui import QFileDialog
-from PyQt4.QtGui import QProgressBar
 
 # PyQt4.QtCore
 from PyQt4.QtCore import QRect
@@ -61,13 +62,6 @@ class new_backup_window(QDialog):
         self.btn_change_save_backup.setGeometry(QRect(100, 64, 335, 30))
         self.btn_change_save_backup.setAutoDefault(False)
 
-        # progressbar
-        self.progressbar = QProgressBar(self)
-        self.progressbar.setGeometry(15, 120, 420, 15)
-        self.progressbar.setMaximum(0)
-        self.progressbar.setMinimum(0)
-        self.progressbar.hide()
-
         # CONNECT SIGNALS
         self.connect(self.btn_change_save_backup, SIGNAL('clicked()'),
                      self.change_save_backup)
@@ -100,6 +94,8 @@ class new_backup_window(QDialog):
             self.make_backup = make_backup_thread()
 
             # CONNECT SIGNALS
+            self.connect(self.make_backup, SIGNAL('nameexists()'),
+                         lambda: msg_name_exists(self))
             self.connect(self.make_backup, SIGNAL('direxists()'),
                          lambda: msg_dir_exists(self))
             self.connect(self.make_backup, SIGNAL('makeend()'),

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft Backup Manager
 
+
 # Minecraft Backu Manager
 from minecraft_backup.core.configuration import load_config
 from minecraft_backup.core.configuration import save_new_config

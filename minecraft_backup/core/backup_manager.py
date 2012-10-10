@@ -36,15 +36,34 @@ class make_backup_thread(QThread):
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
 
-    def run(self, dst, backup_name):
+    def run(self, dst_, backup_name):
         """Start QThread"""
 
-        if path.exists(dst):
+        #Encode in windows-1252 for create folders in Windows
+        if get_os() == 'Windows':
+            self.dst = dst_.decode('utf-8').encode('windows-1252')
+        else:
+            self.dst = dst_
+
+        self.backup_list = load_backup_list()
+
+        if self.backup_list is not False:
+            if unicode(backup_name, 'utf-8') not in self.backup_list:
+                self.check_exist_directory(backup_name)
+            else:
+                self.emit(SIGNAL('nameexists()'))
+                self.exit()
+        else:
+            self.check_exist_directory(backup_name)
+
+    def check_exist_directory(self, backup_name):
+        """This function checks if exists directory"""
+
+        if path.exists(self.dst):
             self.emit(SIGNAL('direxists()'))
             self.exit()
         else:
-            self.make_backup(dst, backup_name)
-
+            self.make_backup(self.dst, backup_name)
             self.exit()
 
     def make_backup(self, dst, backup_name):
@@ -61,15 +80,20 @@ class make_backup_thread(QThread):
     def save_backup_list(self, backup_name, path):
         """This function save backup list"""
 
+        #Decode for save in utf-8
+        if get_os() == 'Windows':
+            self.path = path.decode('windows-1252').encode('utf-8')
+        else:
+            self.path = path
+
         self.backup_list = load_backup_list()
 
         if self.backup_list is not False:
-            self.backup_list[backup_name] = path
+            self.backup_list[backup_name] = self.path
             save_backup_file(self.backup_list)
-
         else:
             self.first_backup_list = {}
-            self.first_backup_list[backup_name] = path
+            self.first_backup_list[backup_name] = self.path
             save_backup_file(self.first_backup_list)
 
 
@@ -112,7 +136,6 @@ def load_backup_list():
         load_backup_file = loads(list_backup_file.read(), encoding='utf-8')
         list_backup_file.close()
 
-        print load_backup_file
         return load_backup_file
     else:
         return False
@@ -129,24 +152,18 @@ def remove_backup_name(backup_name):
 def remove_backup(backup_name):
     """Remove data and backup files"""
 
-    backup = unicode(backup_name, 'utf-8')
-
-    print backup
-
     backup_list = load_backup_list()
-    print backup_list[backup]
 
-    rmtree(backup_list[backup])
-    remove_backup_name(backup)
+    rmtree(backup_list[backup_name])
+    remove_backup_name(backup_name)
 
 
 def restore_backup(os, backup_name):
     """This function restore backup"""
 
-    backup = str(backup_name)
     backup_list = load_backup_list()
     dst = os
-    src = backup_list[backup]
+    src = backup_list[backup_name]
 
     if path.exists(os):
         copy_backup_files(src, dst)

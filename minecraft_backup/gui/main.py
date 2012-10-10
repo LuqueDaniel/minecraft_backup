@@ -1,6 +1,7 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft backup Manager
 
+
 # Minecraft Backup Manager
 from minecraft_backup.resources import IMAGES
 from minecraft_backup.resources import GAME_PATH
@@ -14,6 +15,7 @@ from minecraft_backup.gui.msg_box import msg_about_qt
 from minecraft_backup.gui.msg_box import msg_backup_folder_not_exists
 from minecraft_backup.gui.msg_box import msg_remove_backup
 from minecraft_backup.gui.msg_box import msg_restore_backup
+from minecraft_backup.gui.msg_box import msg_restore_finishied
 from minecraft_backup.gui.dialogs import config_window
 from minecraft_backup.gui.dialogs import new_backup_window
 
@@ -31,11 +33,11 @@ from PyQt4.QtCore import QCoreApplication
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtCore import QRect
 
-# sys
-import sys
-
 # os
 from os import path
+
+# sys
+import sys
 
 
 class main_window(QMainWindow):
@@ -102,11 +104,15 @@ class main_window(QMainWindow):
         self.list_backup.clear()
         self.backup_list = load_backup_list()
 
+        self.name_list = []
+
         if self.backup_list is not False:
             for backup in self.backup_list.items():
                 if path.exists(backup[1]):
                     self.list_item = QListWidgetItem(backup[0])
                     self.list_item.setToolTip(backup[1])
+
+                    self.name_list.append(backup[0])
 
                     self.list_backup.addItem(self.list_item)
                 else:
@@ -134,12 +140,21 @@ class main_window(QMainWindow):
         self.connect(self.new_backup_window, SIGNAL('close()'),
                      self.load_backup_list)
 
+    def backup_item_selector(self, item):
+        for name in self.name_list:
+            if item.text() == name:
+                return self.name_list[self.name_list.index(name)]
+            else:
+                continue
+
     def remove_backup(self):
         self.remove_question = msg_remove_backup(self)
 
         if self.remove_question is not False:
             self.backup_item = self.list_backup.currentItem()
-            remove_backup(self.backup_item.text().toUtf8())
+            self.backup_name = self.backup_item_selector(self.backup_item)
+
+            remove_backup(self.backup_name)
             self.load_backup_list()
 
     def restore_backup(self):
@@ -147,9 +162,12 @@ class main_window(QMainWindow):
 
         if self.restore_question is not False:
             self.game_path = GAME_PATH[configuration.get_os()]
-            self.backup_item = self.list_backup.currentItem()
 
-            restore_backup(self.game_path, self.backup_item.text())
+            self.backup_item = self.list_backup.currentItem()
+            self.backup_name = self.backup_item_selector(self.backup_item)
+
+            restore_backup(self.game_path, self.backup_name)
+            msg_restore_finishied(self, self.backup_name)
 
 
 def start():

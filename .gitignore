@@ -3,3 +3,8 @@
 
 # Ignore ninja-ide project file
 *.nja
+
+# Ignore build folders
+build/
+dist/
+Minecraft_Backup_Manager.egg-info

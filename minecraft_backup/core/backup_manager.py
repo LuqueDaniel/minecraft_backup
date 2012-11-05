@@ -1,5 +1,6 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft Backup Manager
+# Source: https://github.com/LuqueDaniel/Minecraft_backup.git
 
 """
     This module contain all functions and class for manage backup
@@ -7,7 +8,6 @@
 
 # Minecraft Backup Manager
 from minecraft_backup.resources import GAME_PATH
-from minecraft_backup.core.configuration import get_os
 
 # PyQt4.QtCore
 from PyQt4.QtCore import QThread
@@ -18,6 +18,9 @@ from os import listdir
 from os import mkdir
 from os import path
 from os import remove
+
+# sys
+import sys
 
 # Shutil
 from shutil import copytree
@@ -40,7 +43,7 @@ class make_backup_thread(QThread):
         """Start QThread"""
 
         #Encode in windows-1252 for create folders in Windows
-        if get_os() == 'Windows':
+        if sys.platform == 'win32':
             self.dst = dst_.decode('utf-8').encode('windows-1252')
         else:
             self.dst = dst_
@@ -69,19 +72,18 @@ class make_backup_thread(QThread):
     def make_backup(self, dst, backup_name):
         """This function make a Minecraft backup"""
 
-        os = get_os()
         mkdir(dst)
 
-        copy_backup_files(GAME_PATH[os], dst)
+        copy_backup_files(GAME_PATH, dst)
 
         self.save_backup_list(backup_name, dst)
         self.emit(SIGNAL('makeend()'))
 
     def save_backup_list(self, backup_name, path):
-        """This function save backup list"""
+        """This function create and save backup list"""
 
         #Decode for save in utf-8
-        if get_os() == 'Windows':
+        if sys.platform == 'win32':
             self.path = path.decode('windows-1252').encode('utf-8')
         else:
             self.path = path
@@ -89,11 +91,15 @@ class make_backup_thread(QThread):
         self.backup_list = load_backup_list()
 
         if self.backup_list is not False:
-            self.backup_list[backup_name] = self.path
+            self.backup_list[backup_name] = {'name': backup_name,
+                                             'path': self.path}
+
             save_backup_file(self.backup_list)
         else:
             self.first_backup_list = {}
-            self.first_backup_list[backup_name] = self.path
+            self.first_backup_list[backup_name] = {'name': backup_name,
+                                                   'path': self.path}
+
             save_backup_file(self.first_backup_list)
 
 
@@ -154,19 +160,18 @@ def remove_backup(backup_name):
 
     backup_list = load_backup_list()
 
-    rmtree(backup_list[backup_name])
+    rmtree(backup_list[backup_name]['path'])
     remove_backup_name(backup_name)
 
 
-def restore_backup(os, backup_name):
+def restore_backup(backup_name):
     """This function restore backup"""
 
     backup_list = load_backup_list()
-    dst = os
-    src = backup_list[backup_name]
+    src = backup_list[backup_name]['path']
 
-    if path.exists(os):
-        copy_backup_files(src, dst)
+    if path.exists(GAME_PATH):
+        copy_backup_files(src, GAME_PATH)
     else:
-        mkdir(os)
-        copy_backup_files(src, dst)
+        mkdir(GAME_PATH)
+        copy_backup_files(src, GAME_PATH)

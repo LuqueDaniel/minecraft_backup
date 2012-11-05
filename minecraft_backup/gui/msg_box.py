@@ -1,5 +1,6 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft Backup Manager
+# Source: https://github.com/LuqueDaniel/Minecraft_backup.git
 
 # PyQt4.QtGui
 from PyQt4.QtGui import QMessageBox

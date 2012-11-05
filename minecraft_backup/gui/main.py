@@ -1,10 +1,10 @@
 # -*- coding: utf-8 *-*
 # This file is part of Minecraft backup Manager
+# Source: https://github.com/LuqueDaniel/Minecraft_backup.git
 
 
 # Minecraft Backup Manager
 from minecraft_backup.resources import IMAGES
-from minecraft_backup.resources import GAME_PATH
 from minecraft_backup.core import configuration
 from minecraft_backup.core.backup_manager import load_backup_list
 from minecraft_backup.core.backup_manager import remove_backup_name
@@ -17,6 +17,7 @@ from minecraft_backup.gui.msg_box import msg_remove_backup
 from minecraft_backup.gui.msg_box import msg_restore_backup
 from minecraft_backup.gui.msg_box import msg_restore_finishied
 from minecraft_backup.gui.dialogs import config_window
+from minecraft_backup.gui.dialogs import about_minebackup
 from minecraft_backup.gui.dialogs import new_backup_window
 
 # PyQt4.QtGui
@@ -24,6 +25,7 @@ from PyQt4.QtGui import QApplication
 from PyQt4.QtGui import QMainWindow
 from PyQt4.QtGui import QLabel
 from PyQt4.QtGui import QPixmap
+from PyQt4.QtGui import QIcon
 from PyQt4.QtGui import QListWidget
 from PyQt4.QtGui import QListWidgetItem
 from PyQt4.QtGui import QPushButton
@@ -54,18 +56,19 @@ class main_window(QMainWindow):
         self.header()
 
         # btn_config
-        self.btn_config = QPushButton(self)
-        if configuration.get_os() == 'Windows':
-            self.btn_config.setGeometry(QRect(7, 27, 30, 30))
+        self.btn_config = QPushButton(QIcon(IMAGES['config_icon']), '', self)
+        if sys.platform == 'win32':
+            self.btn_config.setGeometry(QRect(7, 27, 32, 32))
         else:
-            self.btn_config.setGeometry(QRect(7, 7, 30, 30))
+            self.btn_config.setGeometry(QRect(7, 7, 32, 32))
         self.btn_config.setToolTip('Configuration')
 
         # menu bar
         self.menu_bar = self.menuBar()
 
         self.menu_help = self.menu_bar.addMenu('About')
-        self.menu_help.addAction('About Minecraft Backup Manager')
+        self.menu_help.addAction('About Minecraft Backup Manager',
+                            lambda: self.open_about_minebackup())
         self.menu_help.addAction('About Qt', lambda: msg_about_qt(self))
 
         # list_backup
@@ -107,17 +110,18 @@ class main_window(QMainWindow):
         self.name_list = []
 
         if self.backup_list is not False:
-            for backup in self.backup_list.items():
-                if path.exists(backup[1]):
-                    self.list_item = QListWidgetItem(backup[0])
-                    self.list_item.setToolTip(backup[1])
+            for backup in self.backup_list.values():
+                if path.exists(backup['path']):
+                    self.list_item = QListWidgetItem(backup['name'])
+                    self.list_item.setToolTip('<b>Directory:</b> %s' %
+                                    backup['path'])
 
-                    self.name_list.append(backup[0])
+                    self.name_list.append(backup['name'])
 
                     self.list_backup.addItem(self.list_item)
                 else:
-                    msg_backup_folder_not_exists(self, backup[0])
-                    remove_backup_name(backup[0])
+                    msg_backup_folder_not_exists(self, backup['name'])
+                    remove_backup_name(backup['name'])
 
     def header(self):
         self.header_label = QLabel(self)
@@ -131,6 +135,10 @@ class main_window(QMainWindow):
     def open_config(self):
         self.configuration_window = config_window.config_window(self)
         self.configuration_window.show()
+
+    def open_about_minebackup(self):
+        self.about_minebackup = about_minebackup.about_minebackup(self)
+        self.about_minebackup.show()
 
     def open_new_backup(self):
         self.new_backup_window = new_backup_window.new_backup_window(self)
@@ -161,12 +169,10 @@ class main_window(QMainWindow):
         self.restore_question = msg_restore_backup(self)
 
         if self.restore_question is not False:
-            self.game_path = GAME_PATH[configuration.get_os()]
-
             self.backup_item = self.list_backup.currentItem()
             self.backup_name = self.backup_item_selector(self.backup_item)
 
-            restore_backup(self.game_path, self.backup_name)
+            restore_backup(self.backup_name)
             msg_restore_finishied(self, self.backup_name)
 
 
@@ -174,9 +180,11 @@ def start():
     app = QApplication(sys.argv)
 
     QCoreApplication.setApplicationName('Minecraft Backup Manager')
+    QCoreApplication.setApplicationVersion('1.0')
+    app.setWindowIcon(QIcon(IMAGES['minebackup_icon']))
 
-    # Create configuration
-    configuration.config(configuration.get_os())
+    #Create configuration
+    configuration.config()
 
     minebackup = main_window()
     minebackup.show()

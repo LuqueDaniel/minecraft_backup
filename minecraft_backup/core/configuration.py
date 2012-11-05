@@ -1,5 +1,6 @@
 #*-* coding: utf-8 *-*
 # This file is part of Minecraft Backup Manager
+# Source: https://github.com/LuqueDaniel/Minecraft_backup.git
 
 """
     The module contain functions for configurations
@@ -9,9 +10,6 @@
 from minecraft_backup.resources import D_TEMPLATE_CONFIG_JSON
 from minecraft_backup.resources import CONFIG_FOLDER
 
-# platform
-from platform import system
-
 # os
 from os import path
 from os import mkdir
@@ -20,19 +18,6 @@ from os import chdir
 # json
 from json import dumps
 from json import loads
-
-
-def get_os():
-    """function for get OS"""
-
-    os_info = system()
-
-    if os_info == 'Linux':
-        return 'Linux'
-    elif os_info == 'Windows':
-        return 'Windows'
-    elif os_info == 'Darwin':
-        return 'MacOS'
 
 
 def load_config(option):
@@ -70,20 +55,20 @@ def save_new_config(save_backup_folder):
     save_config_file.close()
 
 
-def check_config_file(os):
+def check_config_file():
     """Check exists configuration file"""
 
     if path.exists('config.json') is False:
         d_save_config()
 
 
-def config(os):
+def config():
     """Checking if exists config folder and app directory"""
 
-    if path.exists(CONFIG_FOLDER[os]) is True:
-        chdir(CONFIG_FOLDER[os])
-        check_config_file(os)
+    if path.exists(CONFIG_FOLDER) is True:
+        chdir(CONFIG_FOLDER)
+        check_config_file()
     else:
-        mkdir(CONFIG_FOLDER[os], 0777)
-        chdir(CONFIG_FOLDER[os])
-        check_config_file(os)
+        mkdir(CONFIG_FOLDER, 0777)
+        chdir(CONFIG_FOLDER)
+        check_config_file()

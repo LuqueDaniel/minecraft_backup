@@ -21,10 +21,10 @@ Copy folder "minecraft_backup" and "minecraft-backup.py" into Windows folder.
 
 In terminal (cmd or console) enter in "Windows" folder and execute the next command.
 
-''' shell
+``` shell
 cd Windows
 python setup.py py2exe
-'''
+```
 
 Notes
 --------------------------------------------------------------------

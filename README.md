@@ -11,7 +11,7 @@ Dependencies
 
 Changelog
 --------------------------------------------------------------------
-See Changelor.md for more information
+See Changelog.md for more information
 
 How compile for Windows
 --------------------------------------------------------------------

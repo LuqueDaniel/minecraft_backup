@@ -3,7 +3,7 @@ Minecraft Backup Manager
 Minecraft Backup Manager is an application for managing Minecraft
 backups quickly and easily.
 
-Licensed under: GPL v3
+Licensed under: GPLv3
 
 Dependencies
 --------------------------------------------------------------------
@@ -11,6 +11,7 @@ Dependencies
 
 Changelog
 --------------------------------------------------------------------
+See Changelor.md for more information
 
 How compile for Windows
 --------------------------------------------------------------------

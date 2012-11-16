@@ -1,0 +1,56 @@
+body{
+	font-size:16px;
+	line-height:1;
+	margin:0;
+}
+
+h3 {
+	color:#989898;
+	border-bottom:1px #c6c6c6 solid;
+	font-family:sans-serif;
+	margin:0px;
+	padding:0.4em;
+	text-transform:uppercase;
+}
+
+header {
+	border-bottom:2px #c6c6c6 solid;
+	font-family:Francois;
+	text-align:center;
+}
+
+b {
+	color:#7f7f7f;
+	font-weight:bold;
+}
+
+section {
+	border:2px #c6c6c6 solid;
+	border-radius:0.5em;
+	margin:5% 3%;
+	padding:1% 1%;
+	width:30%;
+}
+
+section > p {
+	color:#636363;
+	line-height:1.1;
+	margin:4% 5%;
+	font-family:Helvetica, Arial;
+	font-size:1em;
+}
+
+#download{
+	float:right;
+}
+
+#information {
+	float:left;
+	width:50%;
+
+}
+
+#wrap {
+	margin:0 auto;
+	width:60%;
+}

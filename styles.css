@@ -1,7 +1,41 @@
-body{
+* {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+
+/* LABELS */
+
+a {
+	color:#6c6c6c;
+	font-family:Sans-serif, Arial;
+	text-decoration:none;
+}
+
+a:hover {color:#949494;}
+
+b {color:#7f7f7f; font-weight:bold;}
+
+body {
 	font-size:16px;
 	line-height:1;
 	margin:0;
+}
+
+footer {
+	border-top:2px #c6c6c6 solid;
+	clear:both;
+	color:#a2a2a2;
+	font-family:Helvetica, Arial;
+	font-size:0.8em;
+	font-style:italic;
+	margin-top:3.5%;
+	padding:1.5% 4%;
+	position:relative;
+}
+
+h1 {
+	color:#8f8f8f;
+	font-family: Arial, Sans-serif;
+	font-size:2.5em;
+	font-weight: normal;
+	margin:3%
 }
 
 h3 {
@@ -9,48 +43,73 @@ h3 {
 	border-bottom:1px #c6c6c6 solid;
 	font-family:sans-serif;
 	margin:0px;
-	padding:0.4em;
+	padding:0.5em;
 	text-transform:uppercase;
 }
 
 header {
 	border-bottom:2px #c6c6c6 solid;
-	font-family:Francois;
+	margin-bottom:1%;
 	text-align:center;
-}
-
-b {
-	color:#7f7f7f;
-	font-weight:bold;
 }
 
 section {
 	border:2px #c6c6c6 solid;
 	border-radius:0.5em;
-	margin:5% 3%;
-	padding:1% 1%;
-	width:30%;
+	margin:1% 1%;
+	padding:1%;
+	width:35%;
 }
 
 section > p {
-	color:#636363;
+	color:#767676;
 	line-height:1.1;
-	margin:4% 5%;
+	margin:3% 5%;
 	font-family:Helvetica, Arial;
 	font-size:1em;
 }
 
-#download{
-	float:right;
+/* IDS */
+
+#download {display:inline-block;}
+
+#information {display:inline-block;}
+
+#image {height:100%; width:100%;}
+
+#img-box {float:left; width:60%;}
+
+#wrap {margin:0 auto; width:65%;}
+
+/* CLASS */
+
+.download_link {
+	background: rgb(122,188,255);
+	background: linear-gradient(to bottom, rgba(122,188,255,1) 0%,rgba(64,150,238,1) 100%);
+	  background: -moz-linear-gradient(top, rgba(122,188,255,1) 0%, rgba(64,150,238,1) 100%);
+	  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(122,188,255,1)), color-stop(100%,rgba(64,150,238,1)));
+	  background: -webkit-linear-gradient(top, rgba(122,188,255,1) 0%,rgba(64,150,238,1) 100%);
+	  background: -o-linear-gradient(top, rgba(122,188,255,1) 0%,rgba(64,150,238,1) 100%);
+	  background: -ms-linear-gradient(top, rgba(122,188,255,1) 0%,rgba(64,150,238,1) 100%);
+	border-radius:0.2em;
+	color:white;
+	display:block;
+	font-size:0.8em;
+	font-weight:bold;
+	margin:3% auto;
+	padding:3% 5%;
+	text-shadow: -1px -1px -1px #4a4a4a;
+	width:70%;
 }
 
-#information {
-	float:left;
-	width:50%;
-
+.download_link:hover {
+	box-shadow: inset 0px 0px 10px #FFF;
+	  -webkit-box-shadow: inset 0px 0px 10px #FFF;
+	color:#FFF;
 }
 
-#wrap {
-	margin:0 auto;
-	width:60%;
+.download_link:active {
+	background: rgb(122,188,255);
+	box-shadow: none;
+	text-shadow: none;
 }

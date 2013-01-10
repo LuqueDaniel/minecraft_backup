@@ -122,8 +122,6 @@ class main_window(QMainWindow):
         self.list_backup.clear()
         self.backup_list = load_backup_list()
 
-        self.name_list = []
-
         if self.backup_list is not False:
             for backup in self.backup_list.values():
                 if path.exists(backup['path']):
@@ -131,12 +129,28 @@ class main_window(QMainWindow):
                     self.list_item.setToolTip('<b>Directory:</b> %s' %
                                     backup['path'])
 
-                    self.name_list.append(backup['name'])
-
                     self.list_backup.addItem(self.list_item)
                 else:
                     msg_backup_folder_not_exists(self, backup['name'])
                     remove_backup_name(backup['name'])
+
+    def remove_backup(self):
+        self.remove_question = msg_remove_backup(self)
+
+        if self.remove_question is not False:
+            self.backup_name = self.list_backup.currentItem().text()
+
+            remove_backup(unicode(self.backup_name))
+            self.load_backup_list()
+
+    def restore_backup(self):
+        self.restore_question = msg_restore_backup(self)
+
+        if self.restore_question is not False:
+            self.backup_name = self.list_backup.currentItem().text()
+
+            restore_backup(unicode(self.backup_name))
+            msg_restore_finishied(self, self.backup_name)
 
     def header(self):
         self.header_label = QLabel(self)
@@ -162,33 +176,6 @@ class main_window(QMainWindow):
         # CONNECT SIGNALS
         self.connect(self.new_backup_window, SIGNAL('close()'),
                      self.load_backup_list)
-
-    def backup_item_selector(self, item):
-        for name in self.name_list:
-            if item.text() == name:
-                return self.name_list[self.name_list.index(name)]
-            else:
-                continue
-
-    def remove_backup(self):
-        self.remove_question = msg_remove_backup(self)
-
-        if self.remove_question is not False:
-            self.backup_item = self.list_backup.currentItem()
-            self.backup_name = self.backup_item_selector(self.backup_item)
-
-            remove_backup(self.backup_name)
-            self.load_backup_list()
-
-    def restore_backup(self):
-        self.restore_question = msg_restore_backup(self)
-
-        if self.restore_question is not False:
-            self.backup_item = self.list_backup.currentItem()
-            self.backup_name = self.backup_item_selector(self.backup_item)
-
-            restore_backup(self.backup_name)
-            msg_restore_finishied(self, self.backup_name)
 
 
 def start():

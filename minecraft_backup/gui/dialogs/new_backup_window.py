@@ -50,7 +50,7 @@ class new_backup_window(QDialog):
         self.setMaximumSize(450, 200)
         self.setMinimumSize(450, 200)
         self.setWindowTitle('Create a new backup')
-        center_widget(self)
+        center_widget(self, parent)
 
         # STANNDARD BUTTONS
         self.btn_cancel = QPushButton('Cancel', self)

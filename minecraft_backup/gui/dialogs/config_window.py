@@ -44,7 +44,7 @@ class config_window(QDialog):
         self.setMaximumSize(500, 400)
         self.setMinimumSize(500, 400)
         self.setWindowTitle('Minecraft Backup Manager - Configuration')
-        center_widget(self)
+        center_widget(self, parent)
 
         # STANNDARD BUTTONS
         self.button_box = QDialogButtonBox(self)

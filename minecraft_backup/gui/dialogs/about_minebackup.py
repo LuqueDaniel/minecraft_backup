@@ -83,6 +83,11 @@ backups quickly and easily.""")
 
         vbox.addWidget(self.label_license)
 
+        self.label_project_url = QLabel('Website: <a href="%s">%s</a>' % (
+                minecraft_backup.__url__, minecraft_backup.__url__))
+
+        vbox.addWidget(self.label_project_url)
+
         #label_source
         self.label_source = QLabel('Source: <a href="%s">%s</a>' % (
                 minecraft_backup.__source__, minecraft_backup.__source__))

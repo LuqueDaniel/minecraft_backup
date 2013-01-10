@@ -49,6 +49,7 @@ from PyQt4.QtGui import QPushButton
 from PyQt4.QtCore import QCoreApplication
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtCore import QRect
+from PyQt4.QtCore import QTextCodec
 
 # os
 from os import path
@@ -183,7 +184,10 @@ def start():
 
     QCoreApplication.setApplicationName('Minecraft Backup Manager')
     QCoreApplication.setApplicationVersion('1.0')
+    #Set Application icon
     app.setWindowIcon(QIcon(IMAGES['minebackup_icon']))
+    #Codec for QString
+    QTextCodec.setCodecForCStrings(QTextCodec.codecForName('utf-8'))
 
     #Create configuration
     configuration.config()

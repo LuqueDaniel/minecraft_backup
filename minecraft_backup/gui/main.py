@@ -44,6 +44,7 @@ from PyQt4.QtGui import QIcon
 from PyQt4.QtGui import QListWidget
 from PyQt4.QtGui import QListWidgetItem
 from PyQt4.QtGui import QPushButton
+from PyQt4.QtGui import QMenu
 
 # PyQt4.QtCore
 from PyQt4.QtCore import QCoreApplication
@@ -69,25 +70,26 @@ class main_window(QMainWindow):
         self.setMaximumSize(700, 520)
         center_widget(self)
 
+        #Header
         self.header_label = QLabel(self)
         self.header_label.resize(700, 170)
         self.header_label.setPixmap(QPixmap(IMAGES['header']))
 
-        # btn_config
+        #menu_about
+        self.menu_about = QMenu(self)
+        self.menu_about.addAction('About Minecraft Backup Manager',
+                            lambda: self.open_about_minebackup())
+        self.menu_about.addAction('About Qt', lambda: msg_about_qt(self))
+
+        #btn_config
         self.btn_config = QPushButton(QIcon(IMAGES['config_icon']), '', self)
-        if sys.platform == 'win32':
-            self.btn_config.setGeometry(QRect(7, 27, 32, 32))
-        else:
-            self.btn_config.setGeometry(QRect(7, 7, 32, 32))
+        self.btn_config.setGeometry(QRect(7, 7, 32, 32))
         self.btn_config.setToolTip('Configuration')
 
-        # menu bar
-        self.menu_bar = self.menuBar()
-
-        self.menu_help = self.menu_bar.addMenu('About')
-        self.menu_help.addAction('About Minecraft Backup Manager',
-                            lambda: self.open_about_minebackup())
-        self.menu_help.addAction('About Qt', lambda: msg_about_qt(self))
+        #btn_about
+        self.btn_about = QPushButton('About', self)
+        self.btn_about.setGeometry(QRect(45, 7, 80, 32))
+        self.btn_about.setMenu(self.menu_about)
 
         # list_backup
         self.list_backup = QListWidget(self)

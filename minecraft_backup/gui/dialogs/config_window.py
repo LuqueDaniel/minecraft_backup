@@ -21,7 +21,6 @@
 # Minecraft Backu Manager
 from minecraft_backup.core.configuration import load_config
 from minecraft_backup.core.configuration import save_new_config
-from minecraft_backup.gui.center_widget import center_widget
 
 # PyQt4.QtGui
 from PyQt4.QtGui import QDialog
@@ -30,53 +29,58 @@ from PyQt4.QtGui import QLineEdit
 from PyQt4.QtGui import QPushButton
 from PyQt4.QtGui import QFileDialog
 from PyQt4.QtGui import QDialogButtonBox
+from PyQt4.QtGui import QVBoxLayout
+from PyQt4.QtGui import QHBoxLayout
 
 # PyQt4.QtCore
 from PyQt4.QtCore import SIGNAL
-from PyQt4.QtCore import QRect
+from PyQt4.QtCore import QSize
 
 
 class config_window(QDialog):
 
     def __init__(self, parent=None):
         QDialog.__init__(self, parent)
-        self.setGeometry(0, 0, 500, 400)
-        self.setMaximumSize(500, 400)
-        self.setMinimumSize(500, 400)
+        self.setMaximumSize(QSize(0, 0))
+        self.setMinimumSize(500, 0)
         self.setWindowTitle('Minecraft Backup Manager - Configuration')
-        center_widget(self, parent)
 
-        # STANNDARD BUTTONS
+        #STANNDARD BUTTONS
         self.button_box = QDialogButtonBox(self)
-        self.button_box.setGeometry(QRect(150, 360, 341, 32))
         self.button_box.setStandardButtons(QDialogButtonBox.Cancel |
              QDialogButtonBox.Save)
 
-        # LABELS
-        self.label_save_folder = self.generate_label('Save Folder', 15, 20)
-
-        # input_save_folder
+        #input_save_folder
         self.input_save_folder = QLineEdit(self)
-        self.input_save_folder.setGeometry(QRect(100, 17, 290, 25))
         self.input_save_folder.setText(load_config('save_backup_folder'))
         self.input_save_folder.setToolTip('Default folder save backup')
 
-        # change_save_folder
+        #change_save_folder
         self.btn_save_folder = QPushButton('Change', self)
-        self.btn_save_folder.move(400, 16)
 
-        # CONNECT SIGNALS
+        #LAYOUTS
+        #Save Folder Layout
+        self.layout_save_folder = QHBoxLayout()
+        self.layout_save_folder.addWidget(QLabel('Save folder:', self))
+        self.layout_save_folder.addWidget(self.input_save_folder)
+        self.layout_save_folder.addWidget(self.btn_save_folder)
+
+        #Button Box Layout
+        self.layout_button_box = QHBoxLayout()
+        self.layout_button_box.setContentsMargins(0, 25, 0, 0)
+        self.layout_button_box.addWidget(self.button_box)
+
+        #Vertical Container Layout
+        self.Vcontainer = QVBoxLayout(self)
+        self.Vcontainer.addLayout(self.layout_save_folder)
+        self.Vcontainer.addLayout(self.layout_button_box)
+
+        #CONNECT SIGNALS
         self.connect(self.btn_save_folder, SIGNAL('clicked()'),
                      self.change_save_folder)
         self.connect(self.button_box, SIGNAL('accepted()'),
                      self.save_configurations)
         self.connect(self.button_box, SIGNAL('rejected()'), self.close)
-
-    def generate_label(self, text, h, v):
-        self.label = QLabel(self)
-        self.label.setText(text)
-        self.label.adjustSize()
-        self.label.move(h, v)
 
     def change_save_folder(self):
         self.file_dialog = QFileDialog.getExistingDirectory(self,

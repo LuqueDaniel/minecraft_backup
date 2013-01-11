@@ -69,7 +69,9 @@ class main_window(QMainWindow):
         self.setMaximumSize(700, 520)
         center_widget(self)
 
-        self.header()
+        self.header_label = QLabel(self)
+        self.header_label.resize(700, 170)
+        self.header_label.setPixmap(QPixmap(IMAGES['header']))
 
         # btn_config
         self.btn_config = QPushButton(QIcon(IMAGES['config_icon']), '', self)
@@ -152,11 +154,6 @@ class main_window(QMainWindow):
 
             restore_backup(unicode(self.backup_name))
             msg_restore_finishied(self, self.backup_name)
-
-    def header(self):
-        self.header_label = QLabel(self)
-        self.header_label.resize(700, 170)
-        self.header_label.setPixmap(QPixmap(IMAGES['header']))
 
     def enabled_buttons(self):
         self.btn_remove_backup.setEnabled(True)

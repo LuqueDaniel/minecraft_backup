@@ -38,58 +38,41 @@ class about_minebackup(QDialog):
 
     def __init__(self, parent=None):
         QDialog.__init__(self, parent)
-
         self.setWindowTitle('About Minecraft Backup')
         self.setMaximumSize(QSize(0, 0))
-
-        vbox = QVBoxLayout(self)
 
         #Header
         self.header = QLabel()
         self.header.setPixmap(QPixmap(IMAGES['minebackup_icon_128']))
-
-        hbox = QHBoxLayout()
-        hbox.addWidget(self.header)
 
         #title_label
         self.label_title = QLabel('<h1>Minecraft Backup Manager</h1>', self)
         self.label_title.setAlignment(Qt.AlignRight)
         self.label_title.setTextFormat(Qt.RichText)
 
-        hbox.addWidget(self.label_title)
-        vbox.addLayout(hbox)
+        #LAYOUTS
+        #Horizontal Layout
+        self.hbox = QHBoxLayout()
+        self.hbox.addWidget(self.header)
+        self.hbox.addWidget(self.label_title)
 
-        #label_description
-        self.label_description = QLabel(
-"""Minecraft Backup Manager is an application for managing Minecraft
-backups quickly and easily.""")
-
-        vbox.addWidget(self.label_description)
-
-        #label_version
-        self.label_version = QLabel('Version: %s (%s)' % (
+        #Vertical Layout
+        self.vbox = QVBoxLayout(self)
+        self.vbox.addLayout(self.hbox)
+        #Label Docu
+        self.vbox.addWidget(QLabel(minecraft_backup.__docu__))
+        #Label version
+        self.vbox.addWidget(QLabel('Version: %s (%s)' % (
                                     minecraft_backup.__version__,
-                                    minecraft_backup.__version_name__))
-
-        vbox.addWidget(self.label_version)
-
-        self.label_author = QLabel('Author: %s' % minecraft_backup.__author__)
-
-        vbox.addWidget(self.label_author)
-
-        #label_license
-        self.label_license = QLabel('License: %s' % (
-                                    minecraft_backup.__license__))
-
-        vbox.addWidget(self.label_license)
-
-        self.label_project_url = QLabel('Website: <a href="%s">%s</a>' % (
-                minecraft_backup.__url__, minecraft_backup.__url__))
-
-        vbox.addWidget(self.label_project_url)
-
-        #label_source
-        self.label_source = QLabel('Source: <a href="%s">%s</a>' % (
-                minecraft_backup.__source__, minecraft_backup.__source__))
-
-        vbox.addWidget(self.label_source)
+                                    minecraft_backup.__version_name__)))
+        #Label Author
+        self.vbox.addWidget(QLabel('Author: %s' % minecraft_backup.__author__))
+        #Label License
+        self.vbox.addWidget(QLabel('License: %s' % (
+                            minecraft_backup.__license__)))
+        #Label Website Url
+        self.vbox.addWidget(QLabel('Website: <a href="%s">%s</a>' % (
+                minecraft_backup.__url__, minecraft_backup.__url__)))
+        #Label Source
+        self.vbox.addWidget(QLabel('Source: <a href="%s">%s</a>' % (
+                minecraft_backup.__source__, minecraft_backup.__source__)))

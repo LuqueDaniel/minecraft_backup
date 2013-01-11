@@ -21,16 +21,10 @@
 from PyQt4.QtGui import QDesktopWidget
 
 
-def center_widget(widget, parent=None):
+def center_widget(widget):
     """Center widget in screen"""
 
-    if parent is None:
-        center_widget = widget.frameGeometry()
-        center = QDesktopWidget().availableGeometry().center()
-        center_widget.moveCenter(center)
-        widget.move(center_widget.topLeft())
-    else:
-        center_widget = widget.frameGeometry()
-        center = parent.geometry().center()
-        center_widget.moveCenter(center)
-        widget.move(center_widget.topLeft())
+    center_widget = widget.frameGeometry()
+    center = QDesktopWidget().availableGeometry().center()
+    center_widget.moveCenter(center)
+    widget.move(center_widget.topLeft())

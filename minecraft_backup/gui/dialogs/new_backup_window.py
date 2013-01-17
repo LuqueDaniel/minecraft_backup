@@ -84,7 +84,7 @@ class new_backup_window(QDialog):
 
         #Standard Buttons Layout
         self.layout_standard_buttons = QHBoxLayout()
-        self.layout_standard_buttons.setContentsMargins(90, 25, 0, 0)
+        self.layout_standard_buttons.setContentsMargins(90, 20, 0, 0)
         self.layout_standard_buttons.addWidget(self.btn_cancel)
         self.layout_standard_buttons.addWidget(self.btn_create_backup)
 

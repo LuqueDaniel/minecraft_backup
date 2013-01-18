@@ -5,6 +5,10 @@ backups quickly and easily.
 
 Licensed under: GPLv3
 
+Download packages
+--------------------------------------------------------------------
+**[Download packages and executables](http://luquedaniel.github.com/Minecraft_backup/)**
+
 Dependencies
 --------------------------------------------------------------------
 - **[PyQt 4](http://www.riverbankcomputing.co.uk/software/pyqt/download)**

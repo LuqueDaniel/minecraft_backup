@@ -89,7 +89,10 @@ class make_backup_thread(QThread):
 
         mkdir(dst)
 
-        copy_backup_files(GAME_PATH, dst)
+        try:
+            copy_backup_files(GAME_PATH, dst)
+        except IOError:
+            self.emit(SIGNAL('IOdenied()'))
 
         self.save_backup_list(backup_name, dst)
         self.emit(SIGNAL('makeend()'))

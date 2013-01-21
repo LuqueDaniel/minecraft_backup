@@ -24,6 +24,7 @@ from minecraft_backup.core.backup_manager import make_backup_thread
 from minecraft_backup.gui.msg_box import msg_no_backup_name
 from minecraft_backup.gui.msg_box import msg_name_exists
 from minecraft_backup.gui.msg_box import msg_dir_exists
+from minecraft_backup.gui.msg_box import msg_IO_denied
 from minecraft_backup.gui.msg_box import msg_make_backup_finishied
 
 # PyQt4.QtGui
@@ -119,11 +120,17 @@ class new_backup_window(QDialog):
 
             self.make_backup = make_backup_thread()
 
-            # CONNECT SIGNALS
+            #--CONNECT SIGNALS--
+            #nameexists()
             self.connect(self.make_backup, SIGNAL('nameexists()'),
                          lambda: msg_name_exists(self))
+            #direxists()
             self.connect(self.make_backup, SIGNAL('direxists()'),
                          lambda: msg_dir_exists(self))
+            #IOdenied()
+            self.connect(self.make_backup, SIGNAL('IOdenied()'),
+                         lambda: msg_IO_denied(self))
+            #makeend()
             self.connect(self.make_backup, SIGNAL('makeend()'),
                          lambda: msg_make_backup_finishied(self))
 

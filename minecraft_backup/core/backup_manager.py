@@ -90,12 +90,16 @@ class make_backup_thread(QThread):
         mkdir(dst)
 
         try:
+            self.make_backup_continue = True
             copy_backup_files(GAME_PATH, dst)
         except IOError:
+            self.make_backup_continue = False
             self.emit(SIGNAL('IOdenied()'))
+            rmtree(dst)
 
-        self.save_backup_list(backup_name, dst)
-        self.emit(SIGNAL('makeend()'))
+        if self.make_backup_continue is True:
+            self.save_backup_list(backup_name, dst)
+            self.emit(SIGNAL('makeend()'))
 
     def save_backup_list(self, backup_name, path):
         """This function create and save backup list"""

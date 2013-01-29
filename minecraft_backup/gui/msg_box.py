@@ -70,7 +70,7 @@ def msg_dir_exists(self):
 
 def msg_IO_denied(self):
     msg_io_denied = QMessageBox.warning(self, 'Permission denied',
-    """Permission denied, check if you have permission.\nRecommend closing
+    """Permission denied, check if you have permission. Recommend closing
     Minecraft for create backup""")
 
 

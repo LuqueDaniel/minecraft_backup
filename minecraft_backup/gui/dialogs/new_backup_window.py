@@ -21,10 +21,10 @@
 # Minecraft Backup Manager
 from minecraft_backup.core.configuration import load_config
 from minecraft_backup.core.backup_manager import make_backup_thread
-from minecraft_backup.gui.center_widget import center_widget
 from minecraft_backup.gui.msg_box import msg_no_backup_name
 from minecraft_backup.gui.msg_box import msg_name_exists
 from minecraft_backup.gui.msg_box import msg_dir_exists
+from minecraft_backup.gui.msg_box import msg_IO_denied
 from minecraft_backup.gui.msg_box import msg_make_backup_finishied
 
 # PyQt4.QtGui
@@ -33,9 +33,12 @@ from PyQt4.QtGui import QLabel
 from PyQt4.QtGui import QLineEdit
 from PyQt4.QtGui import QPushButton
 from PyQt4.QtGui import QFileDialog
+from PyQt4.QtGui import QVBoxLayout
+from PyQt4.QtGui import QHBoxLayout
 
 # PyQt4.QtCore
-from PyQt4.QtCore import QRect
+from PyQt4.QtCore import Qt
+from PyQt4.QtCore import QSize
 from PyQt4.QtCore import SIGNAL
 
 # os
@@ -46,50 +49,58 @@ class new_backup_window(QDialog):
 
     def __init__(self, parent=None):
         QDialog.__init__(self, parent)
-        self.setGeometry(QRect(0, 0, 450, 200))
-        self.setMaximumSize(450, 200)
-        self.setMinimumSize(450, 200)
+        self.setMaximumSize(QSize(0, 0))
+        self.setMinimumSize(450, 0)
         self.setWindowTitle('Create a new backup')
-        center_widget(self)
 
-        # STANNDARD BUTTONS
-        self.btn_cancel = QPushButton('Cancel', self)
-        self.btn_cancel.setGeometry(QRect(135, 160, 80, 28))
-        self.btn_cancel.setAutoDefault(False)
-
-        # btn_create_backup
-        self.btn_create_backup = QPushButton('Create backup', self)
-        self.btn_create_backup.setGeometry(QRect(235, 160, 200, 28))
-
-        # LABELS
-        self.generate_label('Name', 15, 20)
-        self.generate_label('Save folder', 15, 70)
-
-        # input_backup_name
+        #input_backup_name
         self.input_backup_name = QLineEdit(self)
-        self.input_backup_name.setGeometry(QRect(100, 17, 335, 25))
-        self.input_backup_name.text().toUtf8()
         self.input_backup_name.setToolTip('Name of backup')
         self.input_backup_name.setFocus()
 
-        # btn_change_save_backup
+        #btn_change_save_backup
         self.btn_change_save_backup = QPushButton(
                                       load_config('save_backup_folder'), self)
-        self.btn_change_save_backup.setGeometry(QRect(100, 64, 335, 30))
+        self.btn_change_save_backup.sizeHint()
         self.btn_change_save_backup.setAutoDefault(False)
 
-        # CONNECT SIGNALS
+        #btn_cancel
+        self.btn_cancel = QPushButton('Cancel', self)
+        self.btn_cancel.setAutoDefault(False)
+
+        #btn_create_backup
+        self.btn_create_backup = QPushButton('Create backup', self)
+
+        #LAYOUTS
+        #Backup name layout
+        self.layout_name = QHBoxLayout()
+        self.layout_name.addWidget(QLabel('Name:', self))
+        self.layout_name.addWidget(self.input_backup_name)
+
+        #Save Backup Folder Layout
+        self.layout_save_folder = QHBoxLayout()
+        self.layout_save_folder.addWidget(QLabel('Save folder:', self))
+        self.layout_save_folder.addWidget(self.btn_change_save_backup,
+                                          Qt.AlignCenter)
+
+        #Standard Buttons Layout
+        self.layout_standard_buttons = QHBoxLayout()
+        self.layout_standard_buttons.setContentsMargins(90, 20, 0, 0)
+        self.layout_standard_buttons.addWidget(self.btn_cancel)
+        self.layout_standard_buttons.addWidget(self.btn_create_backup)
+
+        #Vertical Container Layout
+        self.Vcontainer = QVBoxLayout(self)
+        self.Vcontainer.addLayout(self.layout_name)
+        self.Vcontainer.addLayout(self.layout_save_folder)
+        self.Vcontainer.addLayout(self.layout_standard_buttons)
+
+        #CONNECT SIGNALS
         self.connect(self.btn_change_save_backup, SIGNAL('clicked()'),
                      self.change_save_backup)
         self.connect(self.btn_cancel, SIGNAL('clicked()'), self.close)
         self.connect(self.btn_create_backup, SIGNAL('clicked()'),
                      self.create_backup)
-
-    def generate_label(self, text, h, v):
-        self.label = QLabel(self)
-        self.label.setText(text)
-        self.label.adjustSize()
-        self.label.move(h, v)
 
     def change_save_backup(self):
         self.file_dialog = QFileDialog.getExistingDirectory(self,
@@ -109,11 +120,17 @@ class new_backup_window(QDialog):
 
             self.make_backup = make_backup_thread()
 
-            # CONNECT SIGNALS
+            #--CONNECT SIGNALS--
+            #nameexists()
             self.connect(self.make_backup, SIGNAL('nameexists()'),
                          lambda: msg_name_exists(self))
+            #direxists()
             self.connect(self.make_backup, SIGNAL('direxists()'),
                          lambda: msg_dir_exists(self))
+            #IOdenied()
+            self.connect(self.make_backup, SIGNAL('IOdenied()'),
+                         lambda: msg_IO_denied(self))
+            #makeend()
             self.connect(self.make_backup, SIGNAL('makeend()'),
                          lambda: msg_make_backup_finishied(self))
 

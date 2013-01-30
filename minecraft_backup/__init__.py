@@ -21,10 +21,11 @@
 __prj__ = 'Minecraft Backup Manager'
 __author__ = 'Daniel Luque'
 __mail__ = 'danielluque14@gmail.com'
-__source__ = 'http://github.com/LuqueDaniel/Minecraft_backup.git'
-__version__ = '1.0'
-__version_name__ = 'Dirt'
-__license__ = 'GPL3'
+__url__ = 'http://luquedaniel.github.com/Minecraft_backup'
+__source__ = 'http://github.com/LuqueDaniel/Minecraft_backup'
+__version__ = '1.1'
+__version_name__ = 'Stone'
+__license__ = 'GPL v3'
 __docu__ = """Minecraft Backup Manager is an application for managing Minecraft
 backups quickly and easily."""
 

@@ -36,7 +36,7 @@ packages = find_packages()
 
 
 information = {'script': 'minecraft-backup.py',
-              'Version': '1.0',
+              'Version': '1.1',
               'copyright': 'GPL3',
               'name': 'Minecraft Backup Manager',
               'dest_base': 'Minecraft Backup Manager',

@@ -16,7 +16,7 @@ Dependencies
 
 Changelog
 --------------------------------------------------------------------
-See Changelog.md for more information
+See **[Changelog.md](https://github.com/LuqueDaniel/Minecraft_backup/blob/master/Changelog.md)** for more information
 
 How compile for Windows
 --------------------------------------------------------------------

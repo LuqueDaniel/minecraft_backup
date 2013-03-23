@@ -19,6 +19,8 @@
 
 
 # Minecraft Backup Manager
+from minecraft_backup import __prj__
+from minecraft_backup import __version__
 from minecraft_backup.resources import IMAGES
 from minecraft_backup.core import configuration
 from minecraft_backup.core.backup_manager import load_backup_list
@@ -34,7 +36,7 @@ from minecraft_backup.gui.msg_box import msg_restore_finishied
 from minecraft_backup.gui.dialogs import config_window
 from minecraft_backup.gui.dialogs import about_minebackup
 from minecraft_backup.gui.dialogs import new_backup_window
-
+    app.setEffectEnabled(Qt.UI_FadeTooltip)
 # PyQt4.QtGui
 from PyQt4.QtGui import QApplication
 from PyQt4.QtGui import QMainWindow
@@ -181,8 +183,8 @@ class main_window(QMainWindow):
 def start():
     app = QApplication(sys.argv)
 
-    QCoreApplication.setApplicationName('Minecraft Backup Manager')
-    QCoreApplication.setApplicationVersion('1.0')
+    QCoreApplication.setApplicationName(__prj__)
+    QCoreApplication.setApplicationVersion(__version__)
     #Set Application icon
     app.setWindowIcon(QIcon(IMAGES['minebackup_icon']))
     #Codec for QString

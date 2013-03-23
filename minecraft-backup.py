@@ -17,7 +17,7 @@
 #
 # Source: https://github.com/LuqueDaniel/Minecraft_backup.git
 
-# Minecraft Backup Manager
+#Minecraft Backup Manager
 import minecraft_backup
 
 

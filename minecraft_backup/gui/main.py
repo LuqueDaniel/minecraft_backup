@@ -36,7 +36,7 @@ from minecraft_backup.gui.msg_box import msg_restore_finishied
 from minecraft_backup.gui.dialogs import config_window
 from minecraft_backup.gui.dialogs import about_minebackup
 from minecraft_backup.gui.dialogs import new_backup_window
-    app.setEffectEnabled(Qt.UI_FadeTooltip)
+
 # PyQt4.QtGui
 from PyQt4.QtGui import QApplication
 from PyQt4.QtGui import QMainWindow

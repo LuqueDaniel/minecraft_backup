@@ -104,12 +104,13 @@ section > p {
 	  background: -o-linear-gradient(top, rgba(122,188,255,1) 0%,rgba(64,150,238,1) 100%);
 	  background: -ms-linear-gradient(top, rgba(122,188,255,1) 0%,rgba(64,150,238,1) 100%);
 	border-radius:0.2em;
-	color:white;
+	color:white !important;
 	display:block;
 	font-size:0.8em;
 	font-weight:bold;
 	margin:3% auto;
 	padding:3% 5%;
+	text-decoration:none !important;
 	text-shadow: -1px -1px #4a4a4a;
 	width:70%;
 }

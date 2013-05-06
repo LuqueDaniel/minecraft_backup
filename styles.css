@@ -75,8 +75,6 @@ section > p {
 
 #information {display:inline-block;}
 
-#image {height:100%; width:100%;}
-
 #img-box {float:left; width:60%;}
 
 #container {margin:0 auto; width:65%;}
@@ -113,3 +111,5 @@ section > p {
 	box-shadow: none;
 	text-shadow: none;
 }
+
+.full-image {height:100%; width:100%;}

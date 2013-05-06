@@ -73,6 +73,20 @@ section > p {
 
 #download {display:inline-block;}
 
+#download > a {
+	color:#4ba4ff;
+	font-size:0.8em;
+	font-weight:bold;
+	margin:3% auto;
+	padding:3% 5%;
+	width:70%;
+}
+
+#download > a:hover {
+	color: #7abcff;
+	text-decoration: underline;
+}
+
 #information {display:inline-block;}
 
 #img-box {float:left; width:60%;}

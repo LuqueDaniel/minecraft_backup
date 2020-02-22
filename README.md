@@ -1,4 +1,4 @@
-Minecraft Backup Manager
+Minecraft Backup Manager [Unmaintained]
 ====================================================================
 Minecraft Backup Manager is an application for managing Minecraft
 backups quickly and easily.
